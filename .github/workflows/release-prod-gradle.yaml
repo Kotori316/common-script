@@ -141,8 +141,10 @@ jobs:
       - name: Verify Main Jar
         if: inputs.enable_signature_check
         run: |
-          for f in $(ls **/build/libs/*.jar | grep -v -e "common" -e "deobf" -e "sources") ; do
-            jarsigner -verify -keystore "${HOME}/kotori316_keystore.jks" "$f" -strict
+          for f in $(ls */build/libs/*.jar | grep -v -e "common" -e "deobf" -e "dev" -e "sources") ; do
+          echo "::group::Jar sign ${f}"
+          jarsigner -verify -keystore "${HOME}/kotori316_keystore.jks" "$f" -strict
+          echo "::endgroup::"
           done
       - name: Verify Maven Local
         if: inputs.enable_signature_check
@@ -158,7 +160,7 @@ jobs:
         run:
           echo "repo-name=$(basename "$REPO")" >> $GITHUB_OUTPUT
         env:
-          REPO: ${{ github.action_repository }}
+          REPO: ${{ github.repository }}
       - name: Upload Artifacts
         if: always()
         uses: actions/upload-artifact@v4
