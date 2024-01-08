@@ -117,7 +117,7 @@ jobs:
           -Dorg.gradle.s3.endpoint="${CLOUDFLARE_S3_ENDPOINT}"
           ${{inputs.release_command}}
         env:
-          RELEASE_DEBUG: true
+          RELEASE_DEBUG: false
           REPO_TOKEN: ${{secrets.GITHUB_TOKEN}}
           AZURE_TOKEN: ${{steps.get-secrets.outputs.azure_token}}
           KEY_PASSWORD: ${{steps.get-secrets.outputs.key_password}}
