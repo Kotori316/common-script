@@ -15,6 +15,9 @@ on:
       use_gradle_cache:
         type: boolean
         default: false
+      java_version:
+        type: string
+        default: '17'
     secrets:
       GCP_IDENTITY_PROVIDER:
         required: true
@@ -39,7 +42,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: ${{inputs.java_version}}
       - uses: gradle/gradle-build-action@v2
         with:
           cache-disabled: ${{!inputs.use_gradle_cache}}
@@ -71,8 +74,8 @@ jobs:
             cloudflare_access_key:kotori316-mods-resources/cloudflare_access_key
             cloudflare_secret_key:kotori316-mods-resources/cloudflare_secret_key
       - run: chmod +x ./gradlew
-      - name: Check build with sign
-        if: inputs.sign_check_command != '' && inputs.enable_signature_check
+      - name: Check build with sign arguments
+        if: inputs.sign_check_command != ''
         run: >-
           ./gradlew
           -Psigning.secretKeyRingFile="${HOME}/secring.gpg"
