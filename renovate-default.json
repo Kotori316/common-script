@@ -55,7 +55,7 @@
       "registryUrls": [
         "https://maven.neoforged.net/releases"
       ],
-      "automerge": false,
+      "automerge": true,
       "ignoreUnstable": false,
       "major": {
         "enabled": false
