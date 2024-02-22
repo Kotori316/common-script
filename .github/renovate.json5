@@ -1,20 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    ":prHourlyLimitNone",
-    ":disableDependencyDashboard",
-    "group:monorepos",
-    "group:recommended",
-    "replacements:all",
-    "workarounds:all"
-  ],
-  "packageRules": [
-    {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "automerge": false
-    }
-  ],
-  "platformCommit": true
+    "github>Kotori316/common-script:renovate-default"
+  ]
 }
