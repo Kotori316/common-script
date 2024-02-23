@@ -19,6 +19,7 @@
       "matchPackagePatterns": [
         "curse.maven",
         "org.typelevel",
+        "org.scala-lang",
         "com.mojang:minecraft"
       ],
       "enabled": false
