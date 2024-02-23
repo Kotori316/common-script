@@ -43,7 +43,7 @@
         "^net.fabricmc.fabric-api*"
       ],
       "automerge": false,
-      "versionCompatibility": "^v(?<version>[^+]+)(?<compatibility>\\+.*)?$"
+      "versionCompatibility": "^(?<version>[^+]+)(?<compatibility>\\+.*)?$"
     },
     {
       "matchManagers": [
