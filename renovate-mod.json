@@ -1,0 +1,41 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "teamreborn",
+        "RebornCore",
+        "TechReborn"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^appeng:appliedenergistics2*"
+      ],
+      "registryUrls": [
+        "https://modmaven.dev"
+      ],
+      "ignoreUnstable": false
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^com.kotori316:test-utility",
+        "^com.kotori316:debug-utility",
+        "^com.kotori316:VersionCheckerMod"
+      ],
+      "registryUrls": [
+        "https://maven.kotori316.com"
+      ]
+    }
+  ]
+}

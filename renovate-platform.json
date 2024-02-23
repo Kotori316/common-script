@@ -1,0 +1,84 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^net.fabricmc*"
+      ],
+      "registryUrls": [
+        "https://maven.fabricmc.net"
+      ]
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^net.minecraftforge*"
+      ],
+      "registryUrls": [
+        "https://maven.minecraftforge.net"
+      ],
+      "automerge": false
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^net.minecraftforge:forge*"
+      ],
+      "versioning": "regex:(?<compatibility>.*-)?(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))"
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^net.fabricmc.fabric-api*"
+      ],
+      "versioning": "regex:^(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))(?<compatibility>\\+.*)?$"
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^net.neoforged*"
+      ],
+      "registryUrls": [
+        "https://maven.neoforged.net/releases"
+      ]
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^net.neoforged:neoforge*"
+      ],
+      "ignoreUnstable": false,
+      "major": {
+        "enabled": false
+      },
+      "minor": {
+        "enabled": false
+      }
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^dev.architectury.loom*",
+        "architectury-plugin"
+      ],
+      "registryUrls": [
+        "https://maven.architectury.dev"
+      ]
+    }
+  ]
+}

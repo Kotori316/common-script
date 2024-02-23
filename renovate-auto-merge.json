@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "automerge": true
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchDepTypes": [
+        "plugin"
+      ],
+      "automerge": true
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^net.minecraftforge:forge*",
+        "^net.fabricmc.fabric-api*",
+        "^net.fabricmc:fabric-loader*",
+        "^net.neoforged:neoforge*",
+        "^com.kotori316:"
+      ],
+      "automerge": true
+    }
+  ]
+}
