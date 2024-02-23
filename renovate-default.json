@@ -40,6 +40,18 @@
         "gradle"
       ],
       "matchPackagePatterns": [
+        "^net.minecraftforge*"
+      ],
+      "registryUrls": [
+        "https://maven.minecraftforge.net"
+      ],
+      "automerge": false
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
         "^net.fabricmc.fabric-api*"
       ],
       "automerge": false,
