@@ -21,8 +21,7 @@
       ],
       "registryUrls": [
         "https://maven.minecraftforge.net"
-      ],
-      "automerge": false
+      ]
     },
     {
       "matchManagers": [

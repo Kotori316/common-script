@@ -7,7 +7,8 @@
     ":disableDependencyDashboard",
     "github>Kotori316/common-script:renovate-mod",
     "github>Kotori316/common-script:renovate-platform",
-    "github>Kotori316/common-script:renovate-auto-merge"
+    "github>Kotori316/common-script:renovate-auto-merge",
+    "github>Kotori316/common-script:renovate-schedule"
   ],
   "platformAutomerge": true,
   "platformCommit": true,
