@@ -9,7 +9,7 @@
         "^net.neoforged:neoforge*"
       ],
       "schedule": [
-        "weekend"
+        "every weekend"
       ]
     }
   ]
