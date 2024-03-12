@@ -8,7 +8,8 @@
       "matchPackagePatterns": [
         "teamreborn",
         "RebornCore",
-        "TechReborn"
+        "TechReborn",
+        "com.refinedmods:refinedstorage"
       ],
       "enabled": false
     },
