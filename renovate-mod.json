@@ -36,7 +36,13 @@
       ],
       "registryUrls": [
         "https://maven.kotori316.com"
-      ]
+      ],
+      "major": {
+        "enabled": false
+      },
+      "minor": {
+        "enabled": false
+      }
     }
   ]
 }
