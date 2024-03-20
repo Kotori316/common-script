@@ -31,8 +31,7 @@
       ],
       "matchPackagePatterns": [
         "^com.kotori316:test-utility",
-        "^com.kotori316:debug-utility",
-        "^com.kotori316:VersionCheckerMod"
+        "^com.kotori316:debug-utility"
       ],
       "registryUrls": [
         "https://maven.kotori316.com"
@@ -43,6 +42,17 @@
       "minor": {
         "enabled": false
       }
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^com.kotori316:VersionCheckerMod"
+      ],
+      "registryUrls": [
+        "https://maven.kotori316.com"
+      ]
     }
   ]
 }
