@@ -9,7 +9,8 @@
         "teamreborn",
         "RebornCore",
         "TechReborn",
-        "com.refinedmods:refinedstorage"
+        "com.refinedmods:refinedstorage",
+        "com.kotori316:scalable*"
       ],
       "enabled": false
     },
