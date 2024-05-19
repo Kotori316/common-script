@@ -180,7 +180,7 @@ jobs:
         if: ${{inputs.use_attestation}}
         uses: actions/attest-build-provenance@v1
         with:
-          subject-path: ${{ steps..main-files.outputs.files }}
+          subject-path: ${{ steps.main-files.outputs.files }}
           subject-name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
       - name: Upload Artifacts
         if: always()
