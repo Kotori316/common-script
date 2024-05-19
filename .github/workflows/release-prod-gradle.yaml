@@ -36,6 +36,7 @@ jobs:
       id-token: write
       contents: write
       packages: write
+      attestations: write
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v3
@@ -164,6 +165,19 @@ jobs:
           echo "repo-name=$(basename "$REPO")" >> $GITHUB_OUTPUT
         env:
           REPO: ${{ github.repository }}
+      - name: Check main files
+        id: main-files
+        run: |
+          ls */build/libs/*.jar | grep -v -e "common" -e "deobf" -e "dev" -e "sources" -e "src" >/tmp/main_files.txt
+          files=$(cat /tmp/main_files.txt | jq -R | jq -s)
+          echo "files=${files}" >> $GITHUB_OUTPUT
+          echo "${files}"
+      - name: Attestation
+        if: false
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: ${{ steps..main-files.outputs.files }}
+          subject-name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
       - name: Upload Artifacts
         if: always()
         uses: actions/upload-artifact@v4
