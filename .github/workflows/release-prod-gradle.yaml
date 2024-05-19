@@ -18,6 +18,10 @@ on:
       java_version:
         type: string
         default: '17'
+      use_attestation:
+        type: boolean
+        default: false
+        description: 'Publish Attestation. Need attestations permission'
     secrets:
       GCP_IDENTITY_PROVIDER:
         required: true
@@ -173,7 +177,7 @@ jobs:
           echo "files=${files}" >> $GITHUB_OUTPUT
           echo "${files}"
       - name: Attestation
-        if: false
+        if: ${{inputs.use_attestation}}
         uses: actions/attest-build-provenance@v1
         with:
           subject-path: ${{ steps..main-files.outputs.files }}
