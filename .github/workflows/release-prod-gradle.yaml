@@ -102,7 +102,7 @@ jobs:
             gpg --verify "$f" "${f:0:-4}"
             echo "::endgroup::"
           done
-          for f in $(ls **/build/libs/*.jar | grep -v -e "common" -e "deobf" -e "dev" -e "sources") ; do
+          for f in $(find . ! -name '*deobf.jar' ! -name '*sources.jar' ! -name '*common.jar' ! -name '*dev.jar' -path '*/build/libs/*' -name '*.jar') ; do
             echo "::group::Jar sign ${f}"
             jarsigner -verify -keystore "${HOME}/kotori316_keystore.jks" "$f" -strict
             echo "::endgroup::"
@@ -172,7 +172,7 @@ jobs:
       - name: Check main files
         id: main-files
         run: |
-          ls **/build/libs/*.jar | grep -v -e "common" -e "deobf" -e "dev" -e "sources" -e "src" >/tmp/main_files.txt
+          find . ! -name '*deobf.jar' ! -name '*sources.jar' ! -name '*common.jar' ! -name '*dev.jar' -path '*/build/libs/*' -name '*.jar' >/tmp/main_files.txt
           files=$(cat /tmp/main_files.txt | jq -R | jq -s -c)
           echo "files=${files}" >> $GITHUB_OUTPUT
           echo "${files}"
