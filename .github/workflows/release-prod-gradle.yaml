@@ -172,6 +172,7 @@ jobs:
       - name: Check main files
         id: main-files
         run: |
+          mkdir -p ~/build_files
           find . ! -name '*deobf.jar' ! -name '*sources.jar' ! -name '*common.jar' ! -name '*dev.jar' ! -path '*/common/*' -path '*/build/libs/*' -name '*.jar' \
             -exec mv -t ~/build_files {} +
           ls ~/build_files
