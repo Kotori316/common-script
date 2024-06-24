@@ -74,10 +74,11 @@ jobs:
             jar_password:kotori316-mods-resources/jar-sign-key-password
             modrinth_token:kotori316-mods-resources/modrinth_token
             curseforge_token:kotori316-mods-resources/curseforge_token
-            azure_token:kotori316-mods-resources/azure_token
             cloudflare_s3_endpoint:kotori316-mods-resources/cloudflare_s3_endpoint
             cloudflare_access_key:kotori316-mods-resources/cloudflare_access_key
             cloudflare_secret_key:kotori316-mods-resources/cloudflare_secret_key
+            repolisite-publisher-name:kotori316-mods-resources/repolisite-publisher-name
+            repolisite-publisher-password:kotori316-mods-resources/repolisite-publisher-password
       - run: chmod +x ./gradlew
       - name: Check build with sign arguments
         if: inputs.sign_check_command != ''
@@ -127,7 +128,6 @@ jobs:
         env:
           RELEASE_DEBUG: false
           REPO_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          AZURE_TOKEN: ${{steps.get-secrets.outputs.azure_token}}
           KEY_PASSWORD: ${{steps.get-secrets.outputs.key_password}}
           KEY_ID: ${{steps.get-secrets.outputs.key_id}}
           JAR_PASSWORD: ${{steps.get-secrets.outputs.jar_password}}
@@ -138,6 +138,8 @@ jobs:
           R2_SECRET_KEY: ${{steps.get-secrets.outputs.cloudflare_secret_key}}
           VERSION_FUNCTION_ENDPOINT: ${{ secrets.GCP_VERSION_FUNCTION_ENDPOINT }}
           SERVICE_ACCOUNT: ${{ secrets.GCP_FUNCTION_EXECUTION_ACCOUNT }}
+          MAVEN_USERNAME: ${{steps.get-secrets.outputs.repolisite-publisher-name}}
+          MAVEN_PASSWORD: ${{steps.get-secrets.outputs.repolisite-publisher-password}}
       - name: Verify Build Files
         if: inputs.enable_signature_check
         run: |
