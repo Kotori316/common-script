@@ -11,6 +11,17 @@
       "schedule": [
         "every weekend"
       ]
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "^mezz.jei:*"
+      ],
+      "schedule": [
+        "on Wednesday"
+      ]
     }
   ]
 }
