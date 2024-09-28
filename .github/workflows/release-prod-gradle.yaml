@@ -198,4 +198,6 @@ jobs:
         with:
           name: ${{ steps.repo-name.outputs.repo-name }}-Maven-${{ github.run_number }}
           retention-days: 1
+          # Required to upload files in ".m2" dir
+          include-hidden-files: true
           path: ~/.m2
