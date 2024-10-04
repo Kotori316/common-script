@@ -28,6 +28,17 @@
         "^com.kotori316:"
       ],
       "automerge": true
+    },
+    {
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackagePatterns": [
+        "org.junit:junit-bom",
+        "org.junit.platform:junit-platform-launcher",
+        "org.junit.jupiter"
+      ],
+      "automerge": true
     }
   ]
 }
