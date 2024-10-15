@@ -36,7 +36,8 @@
       "matchPackagePatterns": [
         "org.junit:junit-bom",
         "org.junit.platform:junit-platform-launcher",
-        "org.junit.jupiter"
+        "org.junit.jupiter",
+        "org.mockito"
       ],
       "automerge": true
     }
