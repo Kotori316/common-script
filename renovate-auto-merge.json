@@ -25,6 +25,7 @@
         "^net.fabricmc.fabric-api*",
         "^net.fabricmc:fabric-loader*",
         "^net.neoforged:neoforge*",
+        "^net.neoforged:testframework*",
         "^com.kotori316:"
       ],
       "automerge": true
