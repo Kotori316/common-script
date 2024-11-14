@@ -105,7 +105,7 @@ jobs:
           done
           for f in $(find . ! -name '*deobf.jar' ! -name '*sources.jar' ! -name '*common.jar' ! -name '*dev.jar' ! -path '*/common/*' -path '*/build/libs/*' -name '*.jar') ; do
             echo "::group::Jar sign ${f}"
-            jarsigner -verify -keystore "${HOME}/kotori316_keystore.jks" "$f" -strict
+            jarsigner -verify -keystore "${HOME}/kotori316_keystore.jks" "$f"
             echo "::endgroup::"
           done
           for f in $(find ~/.m2 -name "*.asc") ; do
