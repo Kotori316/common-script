@@ -180,7 +180,7 @@ jobs:
           ls ~/build_files
       - name: Attestation
         if: ${{inputs.use_attestation}}
-        uses: actions/attest-build-provenance@v1
+        uses: actions/attest-build-provenance@v2
         with:
           subject-path: '~/build_files/*'
           subject-name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
