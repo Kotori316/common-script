@@ -6,17 +6,6 @@
         "gradle"
       ],
       "matchPackagePatterns": [
-        "^net.neoforged:neoforge*"
-      ],
-      "schedule": [
-        "every weekend"
-      ]
-    },
-    {
-      "matchManagers": [
-        "gradle"
-      ],
-      "matchPackagePatterns": [
         "^mezz.jei:*"
       ],
       "schedule": [
