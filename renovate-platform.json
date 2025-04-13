@@ -10,7 +10,8 @@
       ],
       "registryUrls": [
         "https://maven.fabricmc.net"
-      ]
+      ],
+      "minimumReleaseAge": "3 days"
     },
     {
       "matchManagers": [
@@ -21,7 +22,8 @@
       ],
       "registryUrls": [
         "https://maven.minecraftforge.net"
-      ]
+      ],
+      "minimumReleaseAge": "3 days"
     },
     {
       "matchManagers": [
@@ -50,7 +52,8 @@
       ],
       "registryUrls": [
         "https://maven.neoforged.net/releases"
-      ]
+      ],
+      "minimumReleaseAge": "3 days"
     },
     {
       "matchManagers": [
