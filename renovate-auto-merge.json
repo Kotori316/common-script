@@ -41,6 +41,15 @@
         "org.mockito"
       ],
       "automerge": true
+    },
+    {
+      "matchManagers": [
+        "gradle-wrapper"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "automerge": true
     }
   ]
 }
