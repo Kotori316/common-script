@@ -36,6 +36,8 @@ jobs:
   release:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      DISABLE_EXAMPLE: true
     permissions:
       id-token: write
       contents: write
