@@ -68,7 +68,8 @@
       },
       "minor": {
         "enabled": false
-      }
+      },
+      "versioning": "semver"
     },
     {
       "matchManagers": [
