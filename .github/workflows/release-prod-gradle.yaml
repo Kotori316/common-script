@@ -35,7 +35,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     env:
       DISABLE_EXAMPLE: true
     permissions:
