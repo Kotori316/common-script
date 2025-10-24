@@ -188,7 +188,7 @@ jobs:
           subject-name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
           retention-days: 7
@@ -196,7 +196,7 @@ jobs:
             **/build/*libs/
       - name: Upload maven
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ steps.repo-name.outputs.repo-name }}-Maven-${{ github.run_number }}
           retention-days: 1
