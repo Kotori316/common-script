@@ -55,14 +55,19 @@ jobs:
         with:
           workload_identity_provider: ${{secrets.GCP_IDENTITY_PROVIDER}}
           service_account: ${{secrets.GCP_SERVICE_ACCOUNT}}
+      - name: Create Temporary Directory
+        id: tmp-dir
+        run: |
+          TMP_DIR="$(mktemp -d)"
+          echo "path=${TMP_DIR}" >> "$GITHUB_OUTPUT"
       - name: Download Private Key
-        run: gcloud storage cp gs://kotori316-resources/secring.gpg "${HOME}/secring.gpg"
+        run: gcloud storage cp gs://kotori316-resources/secring.gpg "${{ steps.tmp-dir.outputs.path }}/secring.gpg"
       - name: Download JKS
-        run: gcloud storage cp gs://kotori316-resources/kotori316_keystore.jks "${HOME}/kotori316_keystore.jks"
+        run: gcloud storage cp gs://kotori316-resources/kotori316_keystore.jks "${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks"
       - name: Download Public Key
         run: |
-          gcloud storage cp gs://kotori316-resources/pgp_public.pub "${HOME}/pgp_public.pub"
-          gpg --import "${HOME}/pgp_public.pub"
+          gcloud storage cp gs://kotori316-resources/pgp_public.pub "${{ steps.tmp-dir.outputs.path }}/pgp_public.pub"
+          gpg --import "${{ steps.tmp-dir.outputs.path }}/pgp_public.pub"
       - name: Get credentials
         id: get-secrets
         uses: google-github-actions/get-secretmanager-secrets@bc9c54b29fdffb8a47776820a7d26e77b379d262 # v3.0.0
@@ -83,10 +88,10 @@ jobs:
         if: inputs.sign_check_command != ''
         run: >-
           ./gradlew
-          -Psigning.secretKeyRingFile="${HOME}/secring.gpg"
+          -Psigning.secretKeyRingFile="${{ steps.tmp-dir.outputs.path }}/secring.gpg"
           -Psigning.password="${KEY_PASSWORD}"
           -Psigning.keyId="${KEY_ID}"
-          -PjarSign.keyLocation="${HOME}/kotori316_keystore.jks"
+          -PjarSign.keyLocation="${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks"
           -PjarSign.keyAlias="ko316"
           -PjarSign.storePass="${JAR_PASSWORD}"
           ${{inputs.sign_check_command}}
@@ -104,7 +109,7 @@ jobs:
           done
           for f in $(find . ! -name '*deobf.jar' ! -name '*sources.jar' ! -name '*common.jar' ! -name '*dev.jar' ! -path '*/common/*' -path '*/build/libs/*' -name '*.jar') ; do
             echo "::group::Jar sign ${f}"
-            jarsigner -verify -keystore "${HOME}/kotori316_keystore.jks" "$f"
+            jarsigner -verify -keystore "${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks" "$f"
             echo "::endgroup::"
           done
           for f in $(find ~/.m2 -name "*.asc") ; do
@@ -116,10 +121,10 @@ jobs:
       - name: Release
         run: >-
           ./gradlew
-          -Psigning.secretKeyRingFile="${HOME}/secring.gpg"
+          -Psigning.secretKeyRingFile="${{ steps.tmp-dir.outputs.path }}/secring.gpg"
           -Psigning.password="${KEY_PASSWORD}"
           -Psigning.keyId="${KEY_ID}"
-          -PjarSign.keyLocation="${HOME}/kotori316_keystore.jks"
+          -PjarSign.keyLocation="${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks"
           -PjarSign.keyAlias="ko316"
           -PjarSign.storePass="${JAR_PASSWORD}"
           -Dorg.gradle.s3.endpoint="${CLOUDFLARE_S3_ENDPOINT}"
@@ -152,7 +157,7 @@ jobs:
         run: |
           for f in $(find . ! -name '*deobf.jar' ! -name '*sources.jar' ! -name '*common.jar' ! -name '*dev.jar' ! -path '*/common/*' -path '*/build/libs/*' -name '*.jar') ; do
           echo "::group::Jar sign ${f}"
-          jarsigner -verify -keystore "${HOME}/kotori316_keystore.jks" "$f"
+          jarsigner -verify -keystore "${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks" "$f"
           echo "::endgroup::"
           done
       - name: Verify Maven Local
@@ -170,17 +175,21 @@ jobs:
           echo "repo-name=$(basename "$REPO")" >> $GITHUB_OUTPUT
         env:
           REPO: ${{ github.repository }}
+      - name: Create Temporary Directory for build files
+        id: build-files-tmp-dir
+        run: |
+          TMP_DIR="$(mktemp -d)"
+          echo "path=${TMP_DIR}" >> "$GITHUB_OUTPUT"
       - name: Check main files
         id: main-files
         run: |
-          mkdir -p ~/build_files
           find . ! -name '*deobf.jar' ! -name '*sources.jar' ! -name '*common.jar' ! -name '*dev.jar' ! -path '*/common/*' -path '*/build/libs/*' -name '*.jar' \
-            -exec mv -t ~/build_files {} +
-          ls ~/build_files
+            -exec mv -t "${{ steps.build-files-tmp-dir.outputs.path }}" {} +
+          ls "${{ steps.build-files-tmp-dir.outputs.path }}"
       - name: Attestation
         uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # v4.1.0
         with:
-          subject-path: '~/build_files/*'
+          subject-path: '${{ steps.build-files-tmp-dir.outputs.path }}/*'
           subject-name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
       - name: Upload Artifacts
         if: always()
@@ -199,3 +208,8 @@ jobs:
           # Required to upload files in ".m2" dir
           include-hidden-files: true
           path: ~/.m2
+      - name: Cleanup Temporary Directory
+        if: always()
+        run: |
+          rm -rf "${{ steps.tmp-dir.outputs.path }}"
+          rm -rf "${{ steps.build-files-tmp-dir.outputs.path }}"
