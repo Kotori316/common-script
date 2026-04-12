@@ -2,5 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>Kotori316/common-script:renovate-default"
+  ],
+  "baseBranches": [
+    "main",
+    "v2"
   ]
 }
