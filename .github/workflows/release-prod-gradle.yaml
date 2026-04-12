@@ -18,10 +18,6 @@ on:
       java_version:
         type: string
         default: '17'
-      use_attestation:
-        type: boolean
-        default: false
-        description: 'Publish Attestation. Need attestations permission'
     secrets:
       GCP_IDENTITY_PROVIDER:
         required: true
@@ -43,6 +39,7 @@ jobs:
       contents: write
       packages: write
       attestations: write
+      artifact-metadata: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: gradle/actions/wrapper-validation@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
@@ -181,8 +178,7 @@ jobs:
             -exec mv -t ~/build_files {} +
           ls ~/build_files
       - name: Attestation
-        if: ${{inputs.use_attestation}}
-        uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
+        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 # v4.1.0
         with:
           subject-path: '~/build_files/*'
           subject-name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
