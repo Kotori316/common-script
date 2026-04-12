@@ -44,17 +44,17 @@ jobs:
       packages: write
       attestations: write
     steps:
-      - uses: actions/checkout@v6
-      - uses: gradle/actions/wrapper-validation@v6
-      - uses: actions/setup-java@v5
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: gradle/actions/wrapper-validation@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
+      - uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
         with:
           distribution: 'temurin'
           java-version: ${{inputs.java_version}}
-      - uses: gradle/actions/setup-gradle@v6
+      - uses: gradle/actions/setup-gradle@50e97c2cd7a37755bbfafc9c5b7cafaece252f6e # v6.1.0
         with:
           cache-disabled: ${{!inputs.use_gradle_cache}}
           cache-read-only: true
-      - uses: google-github-actions/auth@v3
+      - uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
         with:
           workload_identity_provider: ${{secrets.GCP_IDENTITY_PROVIDER}}
           service_account: ${{secrets.GCP_SERVICE_ACCOUNT}}
@@ -68,7 +68,7 @@ jobs:
           gpg --import "${HOME}/pgp_public.pub"
       - name: Get credentials
         id: get-secrets
-        uses: google-github-actions/get-secretmanager-secrets@v3
+        uses: google-github-actions/get-secretmanager-secrets@bc9c54b29fdffb8a47776820a7d26e77b379d262 # v3.0.0
         with:
           secrets: |-
             key_id:kotori316-mods-resources/signing-key-id
@@ -182,13 +182,13 @@ jobs:
           ls ~/build_files
       - name: Attestation
         if: ${{inputs.use_attestation}}
-        uses: actions/attest-build-provenance@v4
+        uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
         with:
           subject-path: '~/build_files/*'
           subject-name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ${{ steps.repo-name.outputs.repo-name }}-Release-${{ github.run_number }}
           retention-days: 7
@@ -196,7 +196,7 @@ jobs:
             **/build/*libs/
       - name: Upload maven
         if: always()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ${{ steps.repo-name.outputs.repo-name }}-Maven-${{ github.run_number }}
           retention-days: 1
