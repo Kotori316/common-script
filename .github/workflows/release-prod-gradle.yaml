@@ -88,17 +88,20 @@ jobs:
         if: inputs.sign_check_command != ''
         run: >-
           ./gradlew
-          -Psigning.secretKeyRingFile="${{ steps.tmp-dir.outputs.path }}/secring.gpg"
-          -Psigning.password="${KEY_PASSWORD}"
-          -Psigning.keyId="${KEY_ID}"
-          -PjarSign.keyLocation="${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks"
-          -PjarSign.keyAlias="ko316"
-          -PjarSign.storePass="${JAR_PASSWORD}"
+          -Psigning.secretKeyRingFile="${SIGNING_SECRET_KEY_RING_FILE}"
+          -Psigning.password="${SIGNING_PASSWORD}"
+          -Psigning.keyId="${SIGNING_KEY_ID}"
+          -PjarSign.keyLocation="${SIGN_KEY_LOCATION}"
+          -PjarSign.keyAlias="${SIGN_KEY_ALIAS}"
+          -PjarSign.storePass="${SIGN_STORE_PASS}"
           ${{inputs.sign_check_command}}
         env:
-          KEY_PASSWORD: ${{steps.get-secrets.outputs.key_password}}
-          KEY_ID: ${{steps.get-secrets.outputs.key_id}}
-          JAR_PASSWORD: ${{steps.get-secrets.outputs.jar_password}}
+          SIGNING_SECRET_KEY_RING_FILE: "${{ steps.tmp-dir.outputs.path }}/secring.gpg"
+          SIGNING_KEY_ID: ${{steps.get-secrets.outputs.key_id}}
+          SIGNING_PASSWORD: ${{steps.get-secrets.outputs.key_password}}
+          SIGN_KEY_LOCATION: "${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks"
+          SIGN_KEY_ALIAS: "ko316"
+          SIGN_STORE_PASS: ${{steps.get-secrets.outputs.jar_password}}
       - name: Verify
         if: inputs.sign_check_command != '' && inputs.enable_signature_check
         run: |
@@ -121,20 +124,17 @@ jobs:
       - name: Release
         run: >-
           ./gradlew
-          -Psigning.secretKeyRingFile="${{ steps.tmp-dir.outputs.path }}/secring.gpg"
-          -Psigning.password="${KEY_PASSWORD}"
-          -Psigning.keyId="${KEY_ID}"
-          -PjarSign.keyLocation="${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks"
-          -PjarSign.keyAlias="ko316"
-          -PjarSign.storePass="${JAR_PASSWORD}"
+          -Psigning.secretKeyRingFile="${SIGNING_SECRET_KEY_RING_FILE}"
+          -Psigning.password="${SIGNING_PASSWORD}"
+          -Psigning.keyId="${SIGNING_KEY_ID}"
+          -PjarSign.keyLocation="${SIGN_KEY_LOCATION}"
+          -PjarSign.keyAlias="${SIGN_KEY_ALIAS}"
+          -PjarSign.storePass="${SIGN_STORE_PASS}"
           -Dorg.gradle.s3.endpoint="${CLOUDFLARE_S3_ENDPOINT}"
           ${{inputs.release_command}}
         env:
           RELEASE_DEBUG: false
           REPO_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          KEY_PASSWORD: ${{steps.get-secrets.outputs.key_password}}
-          KEY_ID: ${{steps.get-secrets.outputs.key_id}}
-          JAR_PASSWORD: ${{steps.get-secrets.outputs.jar_password}}
           CURSE_TOKEN: ${{steps.get-secrets.outputs.curseforge_token}}
           MODRINTH_TOKEN: ${{steps.get-secrets.outputs.modrinth_token}}
           CLOUDFLARE_S3_ENDPOINT: ${{steps.get-secrets.outputs.cloudflare_s3_endpoint}}
@@ -144,6 +144,12 @@ jobs:
           SERVICE_ACCOUNT: ${{ secrets.GCP_FUNCTION_EXECUTION_ACCOUNT }}
           MAVEN_USERNAME: ${{steps.get-secrets.outputs.repolisite-publisher-name}}
           MAVEN_PASSWORD: ${{steps.get-secrets.outputs.repolisite-publisher-password}}
+          SIGNING_SECRET_KEY_RING_FILE: "${{ steps.tmp-dir.outputs.path }}/secring.gpg"
+          SIGNING_KEY_ID: ${{steps.get-secrets.outputs.key_id}}
+          SIGNING_PASSWORD: ${{steps.get-secrets.outputs.key_password}}
+          SIGN_KEY_LOCATION: "${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks"
+          SIGN_KEY_ALIAS: "ko316"
+          SIGN_STORE_PASS: ${{steps.get-secrets.outputs.jar_password}}
       - name: Verify Build Files
         if: inputs.enable_signature_check
         run: |
