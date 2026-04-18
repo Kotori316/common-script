@@ -9,6 +9,18 @@
     },
     {
       "matchManagers": [
+        "github-actions"
+      ],
+      "matchPackageNames": [
+        "Kotori316/common-script"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    },
+    {
+      "matchManagers": [
         "gradle"
       ],
       "matchDepTypes": [
