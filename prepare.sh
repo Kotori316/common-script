@@ -6,21 +6,24 @@ set -eu
 # Download files from Google Cloud Storage
 # ============================================================================
 echo "Downloading signing files from Google Cloud Storage..."
+TMP_DIR="$(mktemp -d)"
 
 # Download Private Key
 echo "Downloading private key..."
-gcloud storage cp gs://kotori316-resources/secring.gpg "${HOME}/secring.gpg"
-export SECRET_KEY_RING_FILE="${HOME}/secring.gpg"
+gcloud storage cp gs://kotori316-resources/secring.gpg "${TMP_DIR}/secring.gpg"
+export SECRET_KEY_RING_FILE="${TMP_DIR}/secring.gpg"
 
 # Download JKS keystore
 echo "Downloading JKS keystore..."
-gcloud storage cp gs://kotori316-resources/kotori316_keystore.jks "${HOME}/kotori316_keystore.jks"
-export KEY_LOCATION="${HOME}/kotori316_keystore.jks"
+gcloud storage cp gs://kotori316-resources/kotori316_keystore.jks "${TMP_DIR}/kotori316_keystore.jks"
+export KEY_LOCATION="${TMP_DIR}/kotori316_keystore.jks"
 
 # Download and import Public Key
 echo "Downloading and importing public key..."
-gcloud storage cp gs://kotori316-resources/pgp_public.pub "${HOME}/pgp_public.pub"
-gpg --import "${HOME}/pgp_public.pub"
+gcloud storage cp gs://kotori316-resources/pgp_public.pub "${TMP_DIR}/pgp_public.pub"
+gpg --import "${TMP_DIR}/pgp_public.pub"
+
+echo "Downloaded files in ${TMP_DIR}"
 
 # ============================================================================
 # Get secrets from Google Cloud Secret Manager
