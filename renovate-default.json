@@ -11,7 +11,7 @@
     "github>Kotori316/common-script:renovate-schedule"
   ],
   "platformAutomerge": true,
-  "platformCommit": true,
+  "platformCommit": "auto",
   "packageRules": [
     {
       "matchManagers": [
