@@ -20,12 +20,12 @@ trap 'rm -rf "${TMP_DIR}"' EXIT
 # Download Private Key
 echo "Downloading private key..."
 gcloud storage cp "gs://${STORAGE_BUCKET}/secring.gpg" "${TMP_DIR}/secring.gpg"
-SECRET_KEY_RING_FILE="${TMP_DIR}/secring.gpg"
+SIGNING_SECRET_KEY_RING_FILE="${TMP_DIR}/secring.gpg"
 
 # Download JKS keystore
 echo "Downloading JKS keystore..."
 gcloud storage cp "gs://${STORAGE_BUCKET}/kotori316_keystore.jks" "${TMP_DIR}/kotori316_keystore.jks"
-KEY_LOCATION="${TMP_DIR}/kotori316_keystore.jks"
+SIGN_KEY_LOCATION="${TMP_DIR}/kotori316_keystore.jks"
 
 # Download and import Public Key
 echo "Downloading and importing public key..."
@@ -40,9 +40,10 @@ echo "Downloaded files in ${TMP_DIR}"
 echo "Retrieving secrets from Google Cloud Secret Manager..."
 
 # Convert secret manager access to CLI commands
-KEY_ID=$(gcloud secrets versions access latest --secret="signing-key-id" --project="${GOOGLE_CLOUD_PROJECT}")
-KEY_PASSWORD=$(gcloud secrets versions access latest --secret="signing-password" --project="${GOOGLE_CLOUD_PROJECT}")
-JAR_PASSWORD=$(gcloud secrets versions access latest --secret="jar-sign-key-password" --project="${GOOGLE_CLOUD_PROJECT}")
+SIGNING_KEY_ID=$(gcloud secrets versions access latest --secret="signing-key-id" --project="${GOOGLE_CLOUD_PROJECT}")
+SIGNING_PASSWORD=$(gcloud secrets versions access latest --secret="signing-password" --project="${GOOGLE_CLOUD_PROJECT}")
+SIGN_KEY_ALIAS="ko316"
+SIGN_STORE_PASS=$(gcloud secrets versions access latest --secret="jar-sign-key-password" --project="${GOOGLE_CLOUD_PROJECT}")
 MODRINTH_TOKEN=$(gcloud secrets versions access latest --secret="modrinth_token" --project="${GOOGLE_CLOUD_PROJECT}")
 CURSE_TOKEN=$(gcloud secrets versions access latest --secret="curseforge_token" --project="${GOOGLE_CLOUD_PROJECT}")
 CLOUDFLARE_S3_ENDPOINT=$(gcloud secrets versions access latest --secret="cloudflare_s3_endpoint" --project="${GOOGLE_CLOUD_PROJECT}")
@@ -55,11 +56,12 @@ MAVEN_PASSWORD=$(gcloud secrets versions access latest --secret="repolisite-publ
 # Execute passed commands
 # ============================================================================
 echo "Executing passed commands: $@"
-SECRET_KEY_RING_FILE="${SECRET_KEY_RING_FILE}" \
-  KEY_LOCATION="${KEY_LOCATION}" \
-  KEY_ID="${KEY_ID}" \
-  KEY_PASSWORD="${KEY_PASSWORD}" \
-  JAR_PASSWORD="${JAR_PASSWORD}" \
+SIGNING_SECRET_KEY_RING_FILE="${SIGNING_SECRET_KEY_RING_FILE}" \
+  SIGNING_KEY_ID="${SIGNING_KEY_ID}" \
+  SIGNING_PASSWORD="${SIGNING_PASSWORD}" \
+  SIGN_KEY_LOCATION="${SIGN_KEY_LOCATION}" \
+  SIGN_KEY_ALIAS="${SIGN_KEY_ALIAS}" \
+  SIGN_STORE_PASS="${SIGN_STORE_PASS}" \
   MODRINTH_TOKEN="${MODRINTH_TOKEN}" \
   CURSE_TOKEN="${CURSE_TOKEN}" \
   CLOUDFLARE_S3_ENDPOINT="${CLOUDFLARE_S3_ENDPOINT}" \
