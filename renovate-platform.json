@@ -63,12 +63,6 @@
         "^net.neoforged:neoforge*"
       ],
       "ignoreUnstable": false,
-      "major": {
-        "enabled": false
-      },
-      "minor": {
-        "enabled": false
-      },
       "versioning": "regex:^(?<compatibility>\\d+\\.\\d+(?:\\.\\d+)?)\\.(?<patch>\\d+)(-(?<prerelease>[^.-]+))?$"
     },
     {
