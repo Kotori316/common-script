@@ -129,6 +129,8 @@ jobs:
           done
         env:
           SIGN_KEY_LOCATION: "${{ steps.tmp-dir.outputs.path }}/kotori316_keystore.jks"
+      - name: Up maven server
+        run: curl -sS -i https://maven2.kotori316.com/api/status/health
       - name: Release
         run: >-
           ./gradlew
